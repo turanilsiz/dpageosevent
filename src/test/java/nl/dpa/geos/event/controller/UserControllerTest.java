@@ -42,7 +42,7 @@ class UserControllerTest {
 	@BeforeEach
 	public void setup() {
 		 om = new ObjectMapper();
-		 testUser = new User(1, "testUser", "testPassword", "testFirstName","testInsertion", "testLastName",1,"ADMIN","test@hotmail.com" );
+		 testUser = new User(1, "testUser", null, "testFirstName","testInsertion", "testLastName",1,"ADMIN","test@hotmail.com" );
     }
 
 	@Test
