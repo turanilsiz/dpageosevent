@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import nl.dpa.geos.event.model.User;
 import nl.dpa.geos.event.service.UserService;
+import nl.dpa.geos.event.util.UserUtil;
+import nl.dpa.geos.event.vo.UserVO;
 
 @RestController
 public class UserController {
@@ -16,10 +18,8 @@ public class UserController {
 	
 	
 	@PostMapping(value = "/registration")
-	public User createUser(@RequestBody User user) {
-		User createdUser = userService.createUser(user);
-		createdUser.setPassword(null);
-		return createdUser;
+	public User createUser(@RequestBody UserVO userVO) {
+		return userService.createUser(UserUtil.convertEntityToVO(userVO));		
 	}
 
 }

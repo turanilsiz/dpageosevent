@@ -40,13 +40,11 @@ public class JwtUser implements UserDetails{
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return password;
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return username;
 	}
 	
@@ -66,21 +64,18 @@ public class JwtUser implements UserDetails{
 	@JsonIgnore
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
     
 	@JsonIgnore
 	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
+	public boolean isAccountNonLocked() {		
 		return true;
 	}
     
 	@JsonIgnore
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

@@ -17,7 +17,7 @@ public class CsrfHeaderFilter extends OncePerRequestFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 	
-		//CsrfToken csrfToken = (CsrfToken)request.getAttribute(CsrfToken.class.getName());
+	
 		String token = request.getHeader("Authorization");
 		if(token != null && token.length()>7) {
 			token=token.substring(7);
@@ -25,8 +25,8 @@ public class CsrfHeaderFilter extends OncePerRequestFilter{
 		
 		if(token != null) {
 			Cookie cookie =WebUtils.getCookie(request, "XSRF-TOKEN");
-			//String token = csrfToken.getToken();
-			if(cookie != null && token !=null && token.equals(cookie.getValue())) {
+			
+			if(cookie != null && token.equals(cookie.getValue())) {
 				cookie = new Cookie("XSRF-TOKEN", token);
 				cookie.setPath("/");
 				response.addCookie(cookie);

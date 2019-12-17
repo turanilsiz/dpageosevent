@@ -21,7 +21,7 @@ import lombok.Setter;
 @Table(name = "DPA_EVENT_USER")
 public class User {
 	
-	private final static int MAX_VALUE=50;
+	private static final  int MAX_VALUE=50;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
