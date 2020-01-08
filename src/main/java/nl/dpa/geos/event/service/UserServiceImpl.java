@@ -22,4 +22,9 @@ public class UserServiceImpl implements UserService{
 		return newUser;
 	}
 
+	@Override
+	public boolean isUserExists(String userName) {
+		return userDao.findByUserName(userName) != null; 		
+	}
+
 }

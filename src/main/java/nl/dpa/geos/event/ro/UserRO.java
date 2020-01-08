@@ -6,14 +6,16 @@ import nl.dpa.geos.event.model.User;
 
 @Getter
 @Setter
-public class UserDTO {
+public class UserRO implements DpaEventReturnObject{
 	
 	User user;
 	String token;
-	public UserDTO(User user, String token) {
+
+	public UserRO(User user, String token) {
 		super();
 		this.user = user;
 		this.token = token;
 	}
+
 
 }

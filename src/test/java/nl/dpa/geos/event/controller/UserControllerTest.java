@@ -44,14 +44,26 @@ class UserControllerTest {
 		 om = new ObjectMapper();
 		 testUser = new User(1, "testUser", null, "testFirstName","testInsertion", "testLastName",1,"ADMIN","test@hotmail.com" );
     }
-
+    
+	
+	@Test
+	void test_createUser_if_user_exist_return_exception() throws JsonProcessingException, Exception {
+		when(userService.isUserExists(Mockito.anyString())).thenReturn(true);
+		mvc.perform(post("/registration").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsString(testUser)))
+		.andExpect(status().isConflict());
+	}
+	
+	
 	@Test
 	void test_createUser() throws JsonProcessingException, Exception {
 		when(userService.createUser(Mockito.any(User.class))).thenReturn(testUser);
 		mvc.perform(post("/registration").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsString(testUser)))
 		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.password", Matchers.nullValue()))
+		.andDo(print())
+		.andExpect(jsonPath("user.password", Matchers.nullValue()))
 		;
 	}
+	
+	
 
 }

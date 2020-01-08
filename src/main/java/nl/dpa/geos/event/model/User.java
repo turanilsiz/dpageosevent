@@ -1,5 +1,7 @@
 package nl.dpa.geos.event.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +21,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "DPA_EVENT_USER")
-public class User {
+public class User implements Serializable {
 	
 	private static final  int MAX_VALUE=50;
 	

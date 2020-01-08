@@ -1,5 +1,6 @@
 package nl.dpa.geos.event.controller;
 
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -18,9 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import nl.dpa.geos.event.dao.UserDao;
 import nl.dpa.geos.event.model.User;
-import nl.dpa.geos.event.ro.UserDTO;
+import nl.dpa.geos.event.ro.DpaEventReturnObject;
+import nl.dpa.geos.event.ro.ExceptionRO;
+import nl.dpa.geos.event.ro.UserRO;
 import nl.dpa.geos.event.security.JwtTokenUtil;
 import nl.dpa.geos.event.security.JwtUser;
+import nl.dpa.geos.event.service.UserService;
 import nl.dpa.geos.event.util.UserUtil;
 import nl.dpa.geos.event.vo.UserVO;
 
@@ -39,10 +43,13 @@ public class AuthenticationController {
 	@Autowired
 	private UserDao userDao;
 	
-	private Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+	@Autowired
+	private UserService userService;
+	
+	private static Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 	
 	@PostMapping(value="/login")
-	public ResponseEntity<UserDTO> login(@RequestBody UserVO userVO, HttpServletResponse response) {
+	public ResponseEntity<DpaEventReturnObject> login(@RequestBody UserVO userVO, HttpServletResponse response) {	
 		try {
 			User user = UserUtil.convertEntityToVO(userVO);
 			Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
@@ -53,12 +60,13 @@ public class AuthenticationController {
 			userDao.save(usr);
 			usr.setPassword(null);
 			response.setHeader("Token", token);
-			return new ResponseEntity<>(new UserDTO(usr, token), HttpStatus.OK);
+			return new ResponseEntity<>(new UserRO(usr, token), HttpStatus.OK);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			
+			String exceptionInfo = userService.isUserExists(userVO.getUserName()) ? "Onjuist wachtwoord" :"Onjuist gebruikernaam";
+		    return new ResponseEntity<>(new ExceptionRO(e.getMessage(), exceptionInfo), HttpStatus.UNAUTHORIZED);	
 		}
-		return null;
+		
 	}
    
 	

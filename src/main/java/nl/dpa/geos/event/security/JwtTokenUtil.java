@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.Transient;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,8 +32,7 @@ public class JwtTokenUtil implements Serializable{
 	@Value("${jwt.expiration}")
 	private Long expiration;
 	
-	@Transient
-	private Logger logger = LoggerFactory.getLogger(JwtTokenUtil.class);
+	private static Logger logger = LoggerFactory.getLogger(JwtTokenUtil.class);
 	
 	public String getUserNameFromToken(String authToken) {
 		String username = null;
@@ -50,14 +47,14 @@ public class JwtTokenUtil implements Serializable{
 		return username;
 	}
 
-	private Claims getClaimsFromToken(String token) {
+	public Claims getClaimsFromToken(String token) {
 		Claims claims =null;
 		try {
 			claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
 			
 		} catch (Exception e) {
 			claims = null;
-		}
+		} 
 		return claims;
 	}
 	

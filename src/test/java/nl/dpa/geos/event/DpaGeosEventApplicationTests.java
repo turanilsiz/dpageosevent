@@ -8,9 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class DpaGeosEventApplicationTests {
 
-	@Test
-	void contextLoads() {
-		assertTrue(true);
-	}
+//	@Test
+//	void contextLoads() {
+//		assertTrue(true);
+//	}
 
 }
