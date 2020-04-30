@@ -3,10 +3,7 @@ package nl.dpa.geos.event.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import nl.dpa.geos.event.ro.DpaEventReturnObject;
 import nl.dpa.geos.event.ro.ExceptionRO;
@@ -30,9 +27,9 @@ public class UserController {
 		return new ResponseEntity<>(new UserRO(userService.createUser(UserUtil.convertEntityToVO(userVO)), null), HttpStatus.OK);		
 	}
 
-	@GetMapping("hello")
-	public String sayHello(){
-		return "Hello world";
+	@GetMapping("hello/{name}")
+	public String sayHello(@PathVariable("name") String name){
+		return "Hello world "+name;
 	}
 
 }
